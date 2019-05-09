@@ -1,6 +1,5 @@
-Meme Gen
-========
+# Generator of Jeroen-memes.
 
-![bones](toystory-example.jpg)
+![](https://turbokut.nl/?.jpg)
 
-Font credit: http://www.google.com/fonts/specimen/Anton
+Forked from https://github.com/trepmal/meme-gen

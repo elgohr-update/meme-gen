@@ -35,7 +35,11 @@ function memegen_build_image( $args = array() ) {
 	extract( $args );
 
 	// alright, lets make an image
-	$im = imagecreatefromjpeg( $args['memebase'] );
+	if (ends_with(strtolower($args['memebase']), '.png')) {
+		$im = imagecreatefrompng($args['memebase']);
+	} else {
+		$im = imagecreatefromjpeg($args['memebase']);
+	}
 
 	// make base image transparent
 	$black = imagecolorallocate( $im, 0, 0, 0 );
@@ -146,4 +150,35 @@ function memegen_sanitize( $input ) {
 	$input = preg_replace( '/[^a-zA-Z0-9-_]/', '-', $input );
 	$input = preg_replace( '/--*/', '-', $input );
 	return $input;
+}
+
+
+function dd(...$things) {
+    die(var_dump($things));
+}
+
+
+function load_validate_config() {
+	$images = array_filter(scandir('img/'), function ($file) {
+		if (substr($file, 0, 1) === '.') {
+			return false;
+		}
+
+		return true;
+	});
+	$config = json_decode(file_get_contents('config.json'), true);
+	json_last_error() == JSON_ERROR_NONE or die('Failed to load config'); // PHP sucks.
+	foreach ($config['memes'] as $filename => $values) {
+		in_array( $filename, $images) or die('Missing image: ' . $filename);
+	}
+
+	return $config;
+}
+
+function starts_with($haystack, $needle) {
+	return substr_compare($haystack, $needle, 0, strlen($needle)) === 0;
+}
+
+function ends_with($haystack, $needle) {
+	return substr_compare($haystack, $needle, -strlen($needle)) === 0;
 }
