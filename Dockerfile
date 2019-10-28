@@ -1,0 +1,18 @@
+FROM php:7.2-apache
+COPY . /var/www/html/
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+RUN apt update
+RUN apt install -y libpng-dev \
+	libwebp-dev \
+	libjpeg62-turbo-dev \
+	libpng-dev libxpm-dev \
+	libfreetype6-dev
+RUN docker-php-ext-configure gd \
+    --with-gd \
+    --with-webp-dir \
+    --with-jpeg-dir \
+    --with-png-dir \
+    --with-zlib-dir \
+    --with-xpm-dir \
+    --with-freetype-dir
+RUN docker-php-ext-install gd
