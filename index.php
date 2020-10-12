@@ -14,12 +14,13 @@ $top_text    = $text[0];
 $bottom_text = $text[1];
 
 // setup args for image
+$imageLocal = dirname(__FILE__) .'/img/' . $image;
 $args = array(
 	'top_text'    => $text[0],
 	'bottom_text' => $text[1],
 	'filename'    => 'turbokut',
 	'font'        => dirname(__FILE__) .'/Anton.ttf',
-	'memebase'    => dirname(__FILE__) .'/img/' . $image,
+	'memebase'    => file_exists($imageLocal) ? $imageLocal : $image,
 	'textsize'    => 40,
 	'textfit'     => true,
 	'padding'     => 10,

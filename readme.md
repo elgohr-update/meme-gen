@@ -1,4 +1,4 @@
-# Generator of Jeroen-memes.
+# Generator of ~Jeroen~ memes.
 
 ![](https://turbokut.nl/?.jpg)
 

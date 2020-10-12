@@ -159,6 +159,14 @@ function dd(...$things) {
 
 
 function load_validate_config() {
+	$env = getenv('CONFIG');
+	if (! empty($env)) {
+		$config = json_decode(base64_decode($env), true);
+	} else {
+		$config = json_decode(file_get_contents('config.json'), true);
+	}
+	json_last_error() == JSON_ERROR_NONE or die('Failed to load config'); // PHP sucks.
+
 	$images = array_filter(scandir('img/'), function ($file) {
 		if (substr($file, 0, 1) === '.') {
 			return false;
@@ -166,9 +174,11 @@ function load_validate_config() {
 
 		return true;
 	});
-	$config = json_decode(file_get_contents('config.json'), true);
-	json_last_error() == JSON_ERROR_NONE or die('Failed to load config'); // PHP sucks.
 	foreach ($config['memes'] as $filename => $values) {
+		if (starts_with($filename, 'http://') || starts_with($filename, 'https://')) {
+			continue;
+		}
+
 		in_array( $filename, $images) or die('Missing image: ' . $filename);
 	}
 
