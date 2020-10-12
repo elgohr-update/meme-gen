@@ -1,0 +1,20 @@
+name: Build Docker images
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Build Docker image
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: robinj1995/meme-gen/meme-gen
+        registry: docker.pkg.github.com
+        username: RobinJ1995
+        password: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        snapshot: true
