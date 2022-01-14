@@ -10,14 +10,14 @@ $config = load_validate_config();
 $image = array_rand($config['memes']);
 $text = $config['memes'][$image][array_rand($config['memes'][$image])];
 
-$top_text    = $text[0];
-$bottom_text = $text[1];
+$top_text    = $_GET['top'] ?: $text[0];
+$bottom_text = $_GET['bottom'] ?: $text[1];
 
 // setup args for image
 $imageLocal = dirname(__FILE__) .'/img/' . $image;
 $args = array(
-	'top_text'    => $text[0],
-	'bottom_text' => $text[1],
+	'top_text'    => $top_text,
+	'bottom_text' => $bottom_text,
 	'filename'    => 'turbokut',
 	'font'        => dirname(__FILE__) .'/Anton.ttf',
 	'memebase'    => file_exists($imageLocal) ? $imageLocal : $image,
