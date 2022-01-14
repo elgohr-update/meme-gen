@@ -69,6 +69,21 @@ function memegen_build_image( $args = array() ) {
 	memegen_imagettfstroketext( $im, $fontsize, $angle, $from_side, $from_top, $textcolor, $black, $font, $bottom_text, 1 );
 
 	$basename = basename( $args['memebase'], '.jpg' );
+
+	// resize
+	if (array_key_exists('max_width', $args) && !empty($args['max_width'])) {
+		$mw = $args['max_width'];
+		$w = imagesx($im);
+		$h = imagesy($im);
+
+		if ($w > $mw) {
+			$nw = $mw;
+			$nh = $h / $w * $nw;
+
+			$im = imagescale($im, $nw, $nh);
+		}
+	}
+
 	// output
 	header('Content-Type: image/jpeg');
 	header('Content-Disposition: filename="'. $basename .'-'. $filename .'.jpg"');

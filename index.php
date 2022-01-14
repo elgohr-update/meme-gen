@@ -33,6 +33,7 @@ $args = array(
 	'textsize'    => 40,
 	'textfit'     => true,
 	'padding'     => 10,
+	'max_width'   => $_GET['max_width']
 );
 
 // create and output image
