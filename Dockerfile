@@ -22,3 +22,5 @@ RUN docker-php-ext-install gd
 COPY Docker/mpm_prefork.conf /etc/apache2/mods-enabled/mpm_prefork.conf
 
 COPY . /var/www/html/
+WORKDIR /var/www/html/
+RUN mkdir -p img # Create if doesn't exist
